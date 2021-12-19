@@ -75,7 +75,7 @@
   height: 8px;
   top: 0;
   position: absolute;
-  background: radial-gradient(circle at 50%, #ffffff, #eeeeee);
+  background: radial-gradient(circle at 50%, #ffffff, #eeeeee, #cccccc);
   border-radius: 10px 10px 0 0;
 }
 
@@ -153,6 +153,46 @@
 .button:hover {
   background: #0e65b6;
   transition: all 0.4s;
+}
+
+.repo {
+  display: flex;
+  padding: 12px 4px;
+  border-bottom: 1px solid #eeeeee;
+}
+
+.repo-name {
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+.repo-description,
+.repo-last-update {
+  color: #999999;
+  font-size: 0.9rem;
+}
+
+.repo-left-container {
+  width: 60%;
+}
+
+.repo-right-container {
+  width: 40%;
+  display: flex;
+  align-items: flex-start;
+  padding-top: 8px;
+}
+
+.public-tag {
+  font-weight: normal !important;
+  border-radius: 8px !important;
+}
+
+.default-tag {
+  border-radius: 8px !important;
+  padding: 4px 12px !important;
+  font-weight: 500 !important;
+  width: fit-content !important;
 }
 
 @media only screen and (max-width: 600px) {

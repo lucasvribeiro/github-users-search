@@ -100,7 +100,7 @@ const SearchBox = (props) => {
         {props.loading ? (
           <img src={loading} alt="Loading" className="loading" />
         ) : (
-          "Ir"
+          "Go"
         )}
       </button>
     </SearchStyled>
