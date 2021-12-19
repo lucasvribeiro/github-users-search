@@ -28,8 +28,8 @@
 
 .visible {
   opacity: 1;
-  height: 45vh;
-  z-index: 1;
+  height: 60vh;
+  z-index: 0;
 }
 
 .user-avatar {

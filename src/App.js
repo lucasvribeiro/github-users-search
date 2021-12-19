@@ -4,7 +4,6 @@ import SearchPage from "./pages/SearchPage/SearchPage";
 import UserPage from "./pages/UserPage/UserPage";
 
 import "./App.css";
-// import "antd/dist/antd.css";
 
 function App() {
   return (

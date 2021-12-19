@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import SearchBox from "../../components/SearchBox/SearchBox";
+import { Modal } from "antd";
 
 import "./SearchPage.css";
 
@@ -8,7 +9,16 @@ const SearchPage = () => {
   const [loading, setLoading] = useState(false);
   const [searchValue, setSearchValue] = useState();
   const [user, setUser] = useState();
+  const [modalState, setModalState] = useState(false);
   const token = process.env.REACT_APP_GITHUB_TOKEN;
+
+  const changeModalState = () => {
+    setModalState(!modalState);
+  };
+
+  const afterOpenModal = () => {
+    console.log("abriu");
+  };
 
   const goSearch = () => {
     setLoading(true);
@@ -89,14 +99,14 @@ const SearchPage = () => {
           </div>
 
           <div className="content-links">
-            <button className="button">
+            <button className="button" onClick={changeModalState}>
               <span className="icon" style={{ color: "#ffffff" }}>
                 <i className="fas fa-book" />
               </span>
               &nbsp;&nbsp;Repositories
             </button>
 
-            <button className="button">
+            <button className="button" onClick={changeModalState}>
               <span className="icon" style={{ color: "#ffffff" }}>
                 <i className="fas fa-star" />
               </span>
@@ -105,6 +115,16 @@ const SearchPage = () => {
           </div>
         </div>
       </div>
+
+      <Modal
+        title="Basic Modal"
+        visible={modalState}
+        closable={true}
+        footer={null}
+        onCancel={changeModalState}
+      >
+        modal de teste
+      </Modal>
     </div>
   );
 };
