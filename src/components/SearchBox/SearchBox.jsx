@@ -24,7 +24,6 @@ const SearchStyled = styled.div`
   position: absolute;
 
   box-shadow: 1px 4px 22px -7px rgba(0, 0, 0, 0.3);
-  transition: all 0.6s ease;
 
   input:not(:placeholder-shown) {
     ~ button {

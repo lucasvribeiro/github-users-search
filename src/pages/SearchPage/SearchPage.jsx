@@ -91,20 +91,25 @@ const SearchPage = () => {
 
   return (
     <div className="search-page">
-      <img
-        src={github}
-        alt="Github"
-        className={user ? "github-cover hidden" : "github-cover"}
-      />
-      <h1 className={user ? "search-page-title hidden" : "search-page-title"}>
-        Find Users from <span style={{ fontWeight: "500" }}>GitHub</span>.
-      </h1>
+      <div className="search-page-header">
+        <img src={github} alt="Github" className={user && "hidden"} />
+        <h1 className={user ? "search-page-title hidden" : "search-page-title"}>
+          Find Users <br />
+          from <span style={{ fontWeight: "500" }}>GitHub</span>.
+        </h1>
+      </div>
 
-      <SearchBox
-        loading={loading}
-        onButtonClick={goSearch}
-        onInputChange={searchChanged}
-      />
+      <div
+        className={
+          user ? "search-page-content has-user" : "search-page-content"
+        }
+      >
+        <SearchBox
+          loading={loading}
+          onButtonClick={goSearch}
+          onInputChange={searchChanged}
+        />
+      </div>
 
       <div className={user ? "user-card visible" : "user-card"}>
         <div className="top-bar"></div>
