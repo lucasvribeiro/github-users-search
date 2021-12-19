@@ -109,73 +109,73 @@ const SearchPage = () => {
           onButtonClick={goSearch}
           onInputChange={searchChanged}
         />
-      </div>
 
-      <div className={user ? "user-card visible" : "user-card"}>
-        <div className="top-bar"></div>
-        <img src={user?.avatar_url} alt="Avatar" className="user-avatar" />
+        <div className={user ? "user-card visible" : "user-card"}>
+          <div className="top-bar"></div>
+          <img src={user?.avatar_url} alt="Avatar" className="user-avatar" />
 
-        <div className="card-content">
-          <div className="content-title">
-            <h2>{user?.name}</h2>
-            <p>@{user?.login}</p>
-          </div>
+          <div className="card-content">
+            <div className="content-title">
+              <h2>{user?.name}</h2>
+              <p>@{user?.login}</p>
+            </div>
 
-          <div className="content-containers">
-            <div className="content-left-container">
-              <div>
-                <span className="icon">
-                  <i className="fas fa-users"></i>
-                </span>
-                &nbsp;&nbsp;<b>{user?.followers}</b> Followers ·{" "}
-                <b> {user?.following}</b> Following
+            <div className="content-containers">
+              <div className="content-left-container">
+                <div>
+                  <span className="icon">
+                    <i className="fas fa-users"></i>
+                  </span>
+                  &nbsp;&nbsp;<b>{user?.followers}</b> Followers ·{" "}
+                  <b> {user?.following}</b> Following
+                </div>
+
+                <div>
+                  <span className="icon">
+                    <i className="fas fa-building"></i>
+                  </span>
+                  &nbsp;&nbsp; {user?.company || "not included"}
+                </div>
               </div>
 
-              <div>
-                <span className="icon">
-                  <i className="fas fa-building"></i>
-                </span>
-                &nbsp;&nbsp; {user?.company || "not included"}
+              <div className="content-right-container">
+                <div>
+                  <span className="icon">
+                    <i className="fas fa-map-marker-alt"></i>
+                  </span>
+                  &nbsp;&nbsp; {user?.location || "not included"}
+                </div>
+
+                <div>
+                  <span className="icon">
+                    <i className="fas fa-globe"></i>
+                  </span>
+                  &nbsp;&nbsp; {user?.blog || "not included"}
+                </div>
               </div>
             </div>
 
-            <div className="content-right-container">
-              <div>
-                <span className="icon">
-                  <i className="fas fa-map-marker-alt"></i>
+            <div className="content-links">
+              <button
+                className="button"
+                onClick={() => changeModalState("repos")}
+              >
+                <span className="icon" style={{ color: "#ffffff" }}>
+                  <i className="fas fa-book" />
                 </span>
-                &nbsp;&nbsp; {user?.location || "not included"}
-              </div>
+                &nbsp;&nbsp;Repositories
+              </button>
 
-              <div>
-                <span className="icon">
-                  <i className="fas fa-globe"></i>
+              <button
+                className="button"
+                onClick={() => changeModalState("starred")}
+              >
+                <span className="icon" style={{ color: "#ffffff" }}>
+                  <i className="fas fa-star" />
                 </span>
-                &nbsp;&nbsp; {user?.blog || "not included"}
-              </div>
+                &nbsp;&nbsp;Starred
+              </button>
             </div>
-          </div>
-
-          <div className="content-links">
-            <button
-              className="button"
-              onClick={() => changeModalState("repos")}
-            >
-              <span className="icon" style={{ color: "#ffffff" }}>
-                <i className="fas fa-book" />
-              </span>
-              &nbsp;&nbsp;Repositories
-            </button>
-
-            <button
-              className="button"
-              onClick={() => changeModalState("starred")}
-            >
-              <span className="icon" style={{ color: "#ffffff" }}>
-                <i className="fas fa-star" />
-              </span>
-              &nbsp;&nbsp;Starred
-            </button>
           </div>
         </div>
       </div>
