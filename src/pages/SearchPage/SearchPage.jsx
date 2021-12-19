@@ -7,6 +7,7 @@ import github from "../../images/github.png";
 
 import "./SearchPage.css";
 import { useEffect } from "react/cjs/react.development";
+import Button from "../../components/Button/Button";
 
 const SearchPage = () => {
   const [loading, setLoading] = useState(false);
@@ -156,25 +157,15 @@ const SearchPage = () => {
             </div>
 
             <div className="content-links">
-              <button
-                className="button"
-                onClick={() => changeModalState("repos")}
-              >
-                <span className="icon" style={{ color: "#ffffff" }}>
-                  <i className="fas fa-book" />
-                </span>
+              <Button onClick={() => changeModalState("repos")}>
+                <i className="fas fa-book" />
                 &nbsp;&nbsp;Repositories
-              </button>
+              </Button>
 
-              <button
-                className="button"
-                onClick={() => changeModalState("starred")}
-              >
-                <span className="icon" style={{ color: "#ffffff" }}>
-                  <i className="fas fa-star" />
-                </span>
+              <Button onClick={() => changeModalState("starred")}>
+                <i className="fas fa-star" />
                 &nbsp;&nbsp;Starred
-              </button>
+              </Button>
             </div>
           </div>
         </div>

@@ -167,25 +167,6 @@
   margin-top: 24px;
 }
 
-.button {
-  height: 48px;
-  width: 164px;
-  border: none;
-  background: #1178da;
-  color: #ffffff;
-  font-size: 1rem;
-  font-weight: 500;
-  cursor: pointer;
-  border-radius: 6px;
-  box-shadow: 1px 4px 22px -7px rgba(0, 0, 0, 0.3);
-  transition: all 0.4s;
-}
-
-.button:hover {
-  background: #0e65b6;
-  transition: all 0.4s;
-}
-
 .repo {
   display: flex;
   padding: 12px 4px;

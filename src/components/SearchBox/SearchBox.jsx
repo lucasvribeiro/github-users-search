@@ -106,8 +106,12 @@ const SearchBox = ({ loading, onInputChange, onButtonClick }) => {
 
 SearchBox.propTypes = {
   loading: PropTypes.bool,
-  onInputChange: PropTypes.func,
-  onButtonClick: PropTypes.func,
+  onInputChange: PropTypes.func.isRequired,
+  onButtonClick: PropTypes.func.isRequired,
+};
+
+SearchBox.defaultProps = {
+  loading: false,
 };
 
 export default SearchBox;
