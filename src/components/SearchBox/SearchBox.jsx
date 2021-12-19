@@ -1,6 +1,7 @@
 import styled from "styled-components";
+import PropTypes from "prop-types";
 
-import loading from "../../images/loading.gif";
+import loadingGif from "../../images/loading.gif";
 import lens from "../../images/lens.png";
 
 const SearchStyled = styled.div`
@@ -13,25 +14,23 @@ const SearchStyled = styled.div`
   background: var(--background);
   width: var(---width);
   height: var(--height);
+
   max-width: 600px;
   overflow: hidden;
   border-radius: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
+  position: absolute;
 
   box-shadow: 1px 4px 22px -7px rgba(0, 0, 0, 0.3);
-
-  position: absolute;
   transition: all 0.6s ease;
-  top: 45%;
 
-  /* show button when input has any text */
   input:not(:placeholder-shown) {
-    ~ .submit-button {
+    ~ button {
       display: block !important;
-      background: #111111 !important;
-      width: 60px !important;
+      background: var(--primary-color) !important;
+      width: 70px !important;
     }
   }
 
@@ -57,54 +56,59 @@ const SearchStyled = styled.div`
       contrast(87%);
   }
 
-  .submit-button {
+  button {
     position: absolute;
+    font-weight: 500;
+    background: #ffffff;
+    border-radius: 0 10px 10px 0;
+    font-size: 1.2rem;
+    height: 100%;
+    color: #ffffff;
+
     top: 0;
     right: 0;
     width: 0;
-    font-weight: bold;
-    background: #ffffff;
-    border-radius: 0 10px 10px 0;
-
-    height: 100%;
     border: 0;
-    color: #ffffff;
-    font-size: 1rem;
 
     transition: all 0.3s cubic-bezier(0, 0, 0.43, 1.49);
     cursor: pointer;
   }
-
-  .loading {
-    width: 24px;
-  }
 `;
 
-// const StyledButton = styled.button``;
+const SearchBox = ({ loading, onInputChange, onButtonClick }) => {
+  // Trigger Button when pressed 'Enter'
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      onButtonClick();
+    }
+  };
 
-const SearchBox = (props) => {
   return (
-    <SearchStyled style={props.user && { top: "5vh" }}>
+    <SearchStyled>
       <input
         type="text"
+        disabled={loading}
+        onChange={onInputChange}
+        onKeyDown={handleKeyDown}
         placeholder="Search Github users..."
-        disabled={props.loading}
-        onChange={props.onChange}
-        onKeyDown={props.onKeyDown}
       />
-      <div className="symbol">
-        <img src={lens} alt="Search Icon" className="lens" />
-      </div>
 
-      <button type="submit" className="submit-button" onClick={props.onClick}>
-        {props.loading ? (
-          <img src={loading} alt="Loading" className="loading" />
+      <img src={lens} alt="Search Icon" className="lens" />
+      <button type="submit" onClick={onButtonClick}>
+        {loading ? (
+          <img src={loadingGif} alt="Loading" style={{ width: "24px" }} />
         ) : (
           "Go"
         )}
       </button>
     </SearchStyled>
   );
+};
+
+SearchBox.propTypes = {
+  loading: PropTypes.bool,
+  onInputChange: PropTypes.func,
+  onButtonClick: PropTypes.func,
 };
 
 export default SearchBox;

@@ -25,12 +25,6 @@ const SearchPage = () => {
     else setModalState({ ...modalState, state: !modalState });
   };
 
-  const handleKeyDown = (e) => {
-    if (e.key === "Enter") {
-      goSearch();
-    }
-  };
-
   const goSearch = () => {
     setLoading(true);
 
@@ -107,11 +101,9 @@ const SearchPage = () => {
       </h1>
 
       <SearchBox
-        onChange={searchChanged}
-        onKeyDown={handleKeyDown}
-        onClick={goSearch}
         loading={loading}
-        user={user}
+        onButtonClick={goSearch}
+        onInputChange={searchChanged}
       />
 
       <div className={user ? "user-card visible" : "user-card"}>
