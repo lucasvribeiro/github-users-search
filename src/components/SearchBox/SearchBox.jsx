@@ -24,7 +24,7 @@ const SearchStyled = styled.div`
 
   position: absolute;
   transition: all 0.6s ease;
-  top: 50%;
+  top: 40%;
 
   /* show button when input has any text */
   input:not(:placeholder-shown) {
@@ -84,7 +84,7 @@ const SearchStyled = styled.div`
 
 const SearchBox = (props) => {
   return (
-    <SearchStyled style={props.user ? { top: "10%" } : { top: "50%" }}>
+    <SearchStyled style={props.user && { top: "5vh" }}>
       <input
         type="text"
         placeholder="buscar usuário..."
