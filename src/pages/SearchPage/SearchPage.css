@@ -1,5 +1,33 @@
+.hidden {
+  display: none;
+}
+
+.github-cover {
+  position: relative;
+  top: -30%;
+  width: 128px;
+  opacity: 1;
+  box-shadow: 1px 4px 22px -7px rgba(0, 0, 0, 0.4);
+  border-radius: 50%;
+}
+
+.search-page-title {
+  position: relative;
+  font-size: 3.5rem;
+  font-weight: 200;
+  top: -28%;
+  line-height: 4rem;
+  width: 30vw;
+  text-shadow: 1px 1px 6px rgba(0, 0, 0, 0.1);
+  padding-left: 16px;
+}
+
 .search-page {
-  background: #fefefe;
+  background: #ffffff;
+  /* background: linear-gradient(0deg, rgba(15,52,64,1) 0%, rgb(52, 231, 145) 55%); */
+  /* background-image: url(../../images/github.jpg);
+  background-size: 100vw;
+  background-position: center; */
   height: 100vh;
   width: 100vw;
   display: flex;

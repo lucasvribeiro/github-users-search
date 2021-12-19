@@ -3,6 +3,8 @@ import axios from "axios";
 import SearchBox from "../../components/SearchBox/SearchBox";
 import { Modal } from "antd";
 
+import github from "../../images/github.png";
+
 import "./SearchPage.css";
 
 const SearchPage = () => {
@@ -14,6 +16,12 @@ const SearchPage = () => {
 
   const changeModalState = () => {
     setModalState(!modalState);
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      goSearch();
+    }
   };
 
   const afterOpenModal = () => {
@@ -46,8 +54,18 @@ const SearchPage = () => {
 
   return (
     <div className="search-page">
+      <img
+        src={github}
+        alt="Github"
+        className={user ? "github-cover hidden" : "github-cover"}
+      />
+      <h1 className={user ? "search-page-title hidden" : "search-page-title"}>
+        Find Users from <b>GitHub</b>.
+      </h1>
+
       <SearchBox
         onChange={searchChanged}
+        onKeyDown={handleKeyDown}
         onClick={goSearch}
         loading={loading}
         user={user}

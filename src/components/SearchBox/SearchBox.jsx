@@ -24,7 +24,7 @@ const SearchStyled = styled.div`
 
   position: absolute;
   transition: all 0.6s ease;
-  top: 40%;
+  top: 45%;
 
   /* show button when input has any text */
   input:not(:placeholder-shown) {
@@ -87,9 +87,10 @@ const SearchBox = (props) => {
     <SearchStyled style={props.user && { top: "5vh" }}>
       <input
         type="text"
-        placeholder="buscar usuário..."
+        placeholder="Search Github users..."
         disabled={props.loading}
         onChange={props.onChange}
+        onKeyDown={props.onKeyDown}
       />
       <div className="symbol">
         <img src={lens} alt="Search Icon" className="lens" />
