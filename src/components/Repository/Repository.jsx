@@ -3,8 +3,6 @@ import PropTypes from "prop-types";
 import ReactTimeAgo from "react-time-ago";
 import { Tag } from "antd";
 
-import en from "javascript-time-ago/locale/en.json";
-
 const StyledRepository = styled.div`
   display: flex;
   padding: 12px 4px;
@@ -55,7 +53,6 @@ const StyledRepository = styled.div`
 
     .repo-name {
       font-size: 1rem;
-      white-space: nowrap;
     }
 
     .repo-description,

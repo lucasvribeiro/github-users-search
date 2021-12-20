@@ -8,7 +8,7 @@ const StyledCard = styled.div`
   background-color: #ffffff;
   display: flex;
   color: #353535;
-  width: 50vw;
+  width: fit-content;
   position: absolute;
   justify-content: center;
   padding: 80px 0 60px 0;
@@ -58,6 +58,10 @@ const StyledCard = styled.div`
   .card-extra-content {
     display: flex;
     justify-content: space-around;
+  }
+
+  .card-left-container {
+    margin-right: 16px;
   }
 
   .card-left-container > section,
