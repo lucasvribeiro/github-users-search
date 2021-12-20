@@ -8,12 +8,16 @@ const StyledModal = styled(Modal)`
   border-radius: 20px !important;
   max-width: 800px !important;
 
+  .ant-modal-header {
+    border-radius: 8px 8px 0 0 !important;
+  }
+
   .ant-modal-content {
     border-radius: 8px !important;
   }
 
-  .ant-modal-header {
-    border-radius: 8px 8px 0 0 !important;
+  .ant-modal-body {
+    padding: 8px 24px !important;
   }
 
   @media only screen and (max-width: 1024px) {
@@ -29,6 +33,7 @@ const Modalr = ({ children, title, visible, closable, onCancel }) => {
       closable={closable}
       onCancel={onCancel}
       footer={null}
+      bodyStyle={{overflowX: 'hidden'}}
     >
       {children}
     </StyledModal>

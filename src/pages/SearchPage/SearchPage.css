@@ -167,44 +167,13 @@
   margin-top: 24px;
 }
 
-.repo {
-  display: flex;
-  padding: 12px 4px;
-  border-bottom: 1px solid #eeeeee;
+.modal-title {
+  color: #222222;
 }
 
-.repo-name {
-  font-size: 1.2rem;
-  font-weight: 500;
-}
-
-.repo-description,
-.repo-last-update {
-  color: #999999;
-  font-size: 0.9rem;
-}
-
-.repo-left-container {
-  width: 60%;
-}
-
-.repo-right-container {
-  width: 40%;
-  display: flex;
-  align-items: flex-start;
-  padding-top: 8px;
-}
-
-.public-tag {
-  font-weight: normal !important;
-  border-radius: 8px !important;
-}
-
-.default-tag {
-  border-radius: 8px !important;
-  padding: 4px 12px !important;
-  font-weight: 500 !important;
-  width: fit-content !important;
+.modal-title i {
+  color: #1178da;
+  padding-right: 4px;
 }
 
 @media only screen and (max-width: 600px) {

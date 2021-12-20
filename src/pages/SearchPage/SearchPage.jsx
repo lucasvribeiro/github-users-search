@@ -7,7 +7,10 @@ import github from "../../images/github.png";
 
 import "./SearchPage.css";
 import { useEffect } from "react/cjs/react.development";
+
 import Button from "../../components/Button/Button";
+import Modalr from "../../components/Modalr/Modalr";
+import Repository from "../../components/Repository/Repository";
 
 const SearchPage = () => {
   const [loading, setLoading] = useState(false);
@@ -171,137 +174,32 @@ const SearchPage = () => {
         </div>
       </div>
 
-      <Modal
-        width="60vw"
+      <Modalr
+        visible={modalState.state}
+        closable={true}
+        onCancel={() => changeModalState()}
         title={
           modalState.type === "repos" ? (
-            <span style={{ color: "#222222" }}>
-              <i style={{ color: "#1178da" }} className="fas fa-book" />{" "}
-              Repositories of {user?.name}
+            <span className="modal-title">
+              <i className="fas fa-book" /> Repositories of {user?.name}
             </span>
           ) : (
-            <span style={{ color: "#222222" }}>
-              <i style={{ color: "#1178da" }} className="fas fa-star" /> Starred
-              of {user?.name}
+            <span className="modal-title">
+              <i className="fas fa-star" /> Starred of {user?.name}
             </span>
           )
         }
-        visible={modalState.state}
-        closable={true}
-        footer={null}
-        onCancel={() => changeModalState()}
       >
         <div className="modal-content">
-          {modalState.state &&
-            (modalState.type === "repos"
-              ? repos?.map((repo) => (
-                  <div className="repo" key={repo.id}>
-                    <div className="repo-left-container">
-                      <div className="repo-name">
-                        {repo.full_name} &nbsp;{" "}
-                        {repo.visibility === "public" && (
-                          <Tag color="geekblue" className="public-tag">
-                            Public
-                          </Tag>
-                        )}
-                      </div>
-                      <div className="repo-description">
-                        <span
-                          className="icon"
-                          style={{ color: "#999999", fontSize: "1rem" }}
-                        >
-                          <i className="fas fa-align-left" />
-                        </span>
-                        &nbsp;&nbsp;{repo.description?.substring(0, 50)}...
-                      </div>
-                      <div className="repo-last-update">
-                        <span
-                          className="icon"
-                          style={{ color: "#999999", fontSize: "1rem" }}
-                        >
-                          <i className="fas fa-clock" />
-                        </span>
-                        &nbsp;&nbsp;Last update: {repo.updated_at}
-                      </div>
-                    </div>
-
-                    <div className="repo-right-container">
-                      <Tag className="default-tag" color="gold">
-                        <span className="icon">
-                          <i className="fas fa-star" />
-                        </span>
-                        &nbsp;&nbsp;{repo.stargazers_count}
-                      </Tag>
-                      <Tag className="default-tag" color="green">
-                        <span className="icon">
-                          <i className="fas fa-eye" />
-                        </span>
-                        &nbsp;&nbsp;{repo.watchers_count}
-                      </Tag>
-                      <Tag className="default-tag" color="magenta">
-                        <span className="icon">
-                          <i className="fas fa-code-branch" />
-                        </span>
-                        &nbsp;&nbsp;&nbsp;{repo.forks_count}
-                      </Tag>
-                    </div>
-                  </div>
-                ))
-              : starred?.map((starred) => (
-                  <div className="repo" key={starred.id}>
-                    <div className="repo-left-container">
-                      <div className="repo-name">
-                        {starred.full_name} &nbsp;{" "}
-                        {starred.visibility === "public" && (
-                          <Tag color="geekblue" className="public-tag">
-                            Public
-                          </Tag>
-                        )}
-                      </div>
-                      <div className="repo-description">
-                        <span
-                          className="icon"
-                          style={{ color: "#999999", fontSize: "1rem" }}
-                        >
-                          <i className="fas fa-align-left" />
-                        </span>
-                        &nbsp;&nbsp;{starred.description?.substring(0, 50)}...
-                      </div>
-                      <div className="repo-last-update">
-                        <span
-                          className="icon"
-                          style={{ color: "#999999", fontSize: "1rem" }}
-                        >
-                          <i className="fas fa-clock" />
-                        </span>
-                        &nbsp;&nbsp;Last update: {starred.updated_at}
-                      </div>
-                    </div>
-
-                    <div className="repo-right-container">
-                      <Tag className="default-tag" color="gold">
-                        <span className="icon">
-                          <i className="fas fa-star" />
-                        </span>
-                        &nbsp;&nbsp;{starred.stargazers_count}
-                      </Tag>
-                      <Tag className="default-tag" color="green">
-                        <span className="icon">
-                          <i className="fas fa-eye" />
-                        </span>
-                        &nbsp;&nbsp;{starred.watchers_count}
-                      </Tag>
-                      <Tag className="default-tag" color="magenta">
-                        <span className="icon">
-                          <i className="fas fa-code-branch" />
-                        </span>
-                        &nbsp;&nbsp;&nbsp;{starred.forks_count}
-                      </Tag>
-                    </div>
-                  </div>
-                )))}
+          {modalState.type === "repos"
+            ? repos?.map((repo) => (
+                <Repository repository={repo} key={repo.id} />
+              ))
+            : starred?.map((starred) => (
+                <Repository repository={starred} key={starred.id} />
+              ))}
         </div>
-      </Modal>
+      </Modalr>
     </div>
   );
 };
