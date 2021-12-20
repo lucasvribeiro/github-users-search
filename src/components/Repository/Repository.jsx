@@ -94,7 +94,7 @@ const Repository = ({ key, repository }) => {
         </div>
         <div className="repo-last-update">
           <i className="fas fa-clock" />
-          <span style={{fontWeight: '500'}}>Last update: </span>
+          <span style={{ fontWeight: "500" }}>Last update: </span>
           <ReactTimeAgo date={new Date(repository.updated_at)} locale="en-US" />
         </div>
       </div>
@@ -117,7 +117,7 @@ const Repository = ({ key, repository }) => {
 };
 
 Repository.propTypes = {
-  key: PropTypes.string,
+  key: PropTypes.any,
   repository: PropTypes.object.isRequired,
 };
 

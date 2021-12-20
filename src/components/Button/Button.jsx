@@ -79,7 +79,7 @@ Button.propTypes = {
   color: PropTypes.string,
   loading: PropTypes.bool,
   disabled: PropTypes.bool,
-  icon: PropTypes.element,
+  icon: PropTypes.string,
   onClick: PropTypes.func.isRequired,
 };
 
