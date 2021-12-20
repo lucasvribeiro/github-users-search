@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 
 import Button from "../../components/Button/Button";
@@ -13,6 +13,9 @@ import "./SearchPage.css";
 
 const SearchPage = () => {
   const [loading, setLoading] = useState(false);
+  const [loadingRepos, setLoadingRepos] = useState(false);
+  const [loadingStarred, setLoadingStarred] = useState(false);
+
   const [searchValue, setSearchValue] = useState();
 
   const [user, setUser] = useState(null);
@@ -22,11 +25,6 @@ const SearchPage = () => {
   const [modalState, setModalState] = useState({ state: false, type: "" });
 
   const token = process.env.REACT_APP_GITHUB_TOKEN;
-
-  const changeModalState = (flag) => {
-    if (flag) setModalState({ state: !modalState.state, type: flag });
-    else setModalState({ ...modalState, state: !modalState });
-  };
 
   const goSearch = () => {
     setLoading(true);
@@ -38,9 +36,11 @@ const SearchPage = () => {
         },
       })
       .then((res) => {
-        console.log(res.data);
         setUser(res.data);
         setLoading(false);
+
+        setRepos(null);
+        setStarred(null);
       })
       .catch((err) => {
         console.log(err.response);
@@ -53,44 +53,48 @@ const SearchPage = () => {
   };
 
   const getRepos = () => {
-    axios
-      .get(`https://api.github.com/users/${user.login}/repos`, {
-        headers: {
-          Authorization: `${token}`,
-        },
-      })
-      .then((res) => {
-        console.log(res.data);
-        setRepos(res.data);
-      })
-      .catch((err) => {
-        console.log(err.response);
-      });
+    if (repos) setModalState({ state: true, type: "repos" });
+    else {
+      setLoadingRepos(true);
+      axios
+        .get(`https://api.github.com/users/${user.login}/repos`, {
+          headers: {
+            Authorization: `${token}`,
+          },
+        })
+        .then((res) => {
+          setRepos(res.data);
+          setLoadingRepos(false);
+          setModalState({ state: true, type: "repos" });
+        })
+        .catch((err) => {
+          console.log(err.response);
+          setLoadingRepos(false);
+        });
+    }
   };
 
   const getStarred = () => {
-    axios
-      .get(`https://api.github.com/users/${user.login}/starred`, {
-        headers: {
-          Authorization: `${token}`,
-        },
-      })
-      .then((res) => {
-        console.log(res.data);
-        setStarred(res.data);
-      })
-      .catch((err) => {
-        console.log(err.response);
-      });
-  };
-
-  useEffect(() => {
-    if (modalState.state) {
-      if (modalState.type === "repos" && !repos) getRepos();
-      else if (modalState.type === "starred" && !starred) getStarred();
+    if (starred) setModalState({ state: true, type: "starred" });
+    else {
+      setLoadingStarred(true);
+      axios
+        .get(`https://api.github.com/users/${user.login}/starred`, {
+          headers: {
+            Authorization: `${token}`,
+          },
+        })
+        .then((res) => {
+          setStarred(res.data);
+          setLoadingStarred(false);
+          setModalState({ state: true, type: "starred" });
+        })
+        .catch((err) => {
+          console.log(err.response);
+          setLoadingStarred(false);
+        });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [modalState]);
+  };
 
   return (
     <div className="search-page">
@@ -117,13 +121,25 @@ const SearchPage = () => {
           user={user}
           visible={user && true}
           buttons={[
-            <Button key="btn-01" onClick={() => changeModalState("repos")}>
-              <i className="fas fa-book" />
-              &nbsp;&nbsp;Repositories
+            <Button
+              icon="book"
+              key="btn-01"
+              type="primary"
+              loading={loadingRepos}
+              disabled={loadingRepos}
+              onClick={getRepos}
+            >
+              Repositories
             </Button>,
-            <Button key="btn-02" onClick={() => changeModalState("starred")}>
-              <i className="fas fa-star" />
-              &nbsp;&nbsp;Starred
+            <Button
+              icon="star"
+              key="btn-02"
+              type="primary"
+              loading={loadingStarred}
+              disabled={loadingStarred}
+              onClick={getStarred}
+            >
+              Starred
             </Button>,
           ]}
         />
@@ -132,7 +148,7 @@ const SearchPage = () => {
       <Modalr
         visible={modalState.state}
         closable={true}
-        onCancel={() => changeModalState()}
+        onCancel={() => setModalState({ ...modalState, state: false })}
         title={
           modalState.type === "repos" ? (
             <span className="modal-title">

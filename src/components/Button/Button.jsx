@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
+import loadingGif from "../../images/loading.gif";
+
 const StyledButton = styled.button`
   height: 48px;
   width: 164px;
@@ -23,6 +25,22 @@ const StyledButton = styled.button`
     background: ${({ type, color }) => type === "primary" && `${color}cc`};
   }
 
+  &:disabled {
+    background: ${({ type, color }) => type === "primary" && `${color}77`};
+    cursor: not-allowed;
+  }
+
+  > i {
+    margin-right: 6px;
+  }
+
+  > img {
+    width: 14px;
+    height: 14px;
+    margin-right: 6px;
+    color: ${({ type, color }) => (type === "primary" ? "#ffffff" : color)};
+  }
+
   @media only screen and (max-width: 480px) {
     height: 42px;
     width: 128px;
@@ -30,9 +48,27 @@ const StyledButton = styled.button`
   }
 `;
 
-const Button = ({ children, type, onClick, color }) => {
+const Button = ({
+  children,
+  type,
+  color,
+  loading,
+  disabled,
+  icon,
+  onClick,
+}) => {
   return (
-    <StyledButton type={type} color={color} onClick={onClick}>
+    <StyledButton
+      type={type}
+      color={color}
+      onClick={onClick}
+      disabled={disabled}
+    >
+      {loading ? (
+        <img src={loadingGif} alt="Loading" />
+      ) : (
+        <i className={`fas fa-${icon}`} />
+      )}
       {children}
     </StyledButton>
   );
@@ -41,12 +77,17 @@ const Button = ({ children, type, onClick, color }) => {
 Button.propTypes = {
   type: PropTypes.string,
   color: PropTypes.string,
+  loading: PropTypes.bool,
+  disabled: PropTypes.bool,
+  icon: PropTypes.element,
   onClick: PropTypes.func.isRequired,
 };
 
 Button.defaultProps = {
   type: "primary",
   color: "#1179da",
+  loading: false,
+  disabled: false,
 };
 
 export default Button;
