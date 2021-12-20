@@ -1,0 +1,19 @@
+.user-page {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.back-link {
+  position: relative;
+  left: -18%;
+  top: -34%;
+}
+
+@media only screen and (max-width: 768px) {
+  .card {
+    top: 15vh !important;
+  }
+}

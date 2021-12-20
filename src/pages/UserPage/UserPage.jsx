@@ -1,7 +1,78 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import Card from "../../components/Card/Card";
+
+import "./UserPage.css";
 
 const UserPage = () => {
-  return <div>user page</div>;
+  const [loading, setLoading] = useState(false);
+  const [user, setUser] = useState();
+  const [organizations, setOrganizations] = useState();
+
+  const username = useParams().username;
+
+  const token = process.env.REACT_APP_GITHUB_TOKEN;
+
+  const getUser = () => {
+    setLoading(true);
+
+    axios
+      .get(`https://api.github.com/users/${username}`, {
+        headers: {
+          Authorization: `${token}`,
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+        setUser(res.data);
+      })
+      .catch((err) => {
+        console.log(err.response);
+        setLoading(false);
+      });
+  };
+
+  useEffect(() => {
+    if (user) {
+      axios
+        .get(`https://api.github.com/users/${username}/orgs`, {
+          headers: {
+            Authorization: `${token}`,
+          },
+        })
+        .then((res) => {
+          console.log(res.data);
+          setOrganizations(res.data);
+          setLoading(false);
+        })
+        .catch((err) => {
+          console.log(err.response);
+          setLoading(false);
+        });
+    }
+  }, [user]);
+
+  useEffect(() => {
+    if (username) getUser();
+  }, [username]);
+
+  return (
+    <div className="user-page">
+      {user && organizations && (
+        <Card
+          type="full"
+          key={user.id}
+          user={user}
+          organizations={organizations}
+          visible={true}
+          showButtons={false}
+          showBackLink={true}
+          style={{ top: "15vh" }}
+        />
+      )}
+    </div>
+  );
 };
 
 export default UserPage;

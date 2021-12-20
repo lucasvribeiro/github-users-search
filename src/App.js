@@ -10,9 +10,9 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<SearchPage />} />
-        <Route path="user/:id" element={<UserPage />} />
+        <Route path="user/:username" element={<UserPage />} />
 
-        {/* <Route path="/*" element={<NotFound />} /> */}
+        <Route path="/*" element={<SearchPage />} />
       </Routes>
     </BrowserRouter>
   );
