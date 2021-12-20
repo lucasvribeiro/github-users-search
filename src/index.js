@@ -1,17 +1,21 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import TimeAgo from "javascript-time-ago";
 
-import './index.css';
+import en from "javascript-time-ago/locale/en.json";
+
+import "./index.css";
 import "antd/dist/antd.min.css";
 
+TimeAgo.addDefaultLocale(en);
 
 ReactDOM.render(
   <React.StrictMode>
     <App />
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById("root")
 );
 
 // If you want to start measuring performance in your app, pass a function

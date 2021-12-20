@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import Card from "../../components/Card/Card";
 
 import "./UserPage.css";
@@ -51,10 +51,12 @@ const UserPage = () => {
           setLoading(false);
         });
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
   useEffect(() => {
     if (username) getUser();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [username]);
 
   return (

@@ -1,6 +1,9 @@
 import styled from "styled-components";
 import PropTypes from "prop-types";
+import ReactTimeAgo from "react-time-ago";
 import { Tag } from "antd";
+
+import en from "javascript-time-ago/locale/en.json";
 
 const StyledRepository = styled.div`
   display: flex;
@@ -90,11 +93,12 @@ const Repository = ({ key, repository }) => {
         </div>
         <div className="repo-description">
           <i className="fas fa-align-left" />
-          {repository.description?.substring(0, 40)}...
+          {repository.description?.substring(0, 40) || "no description"}...
         </div>
         <div className="repo-last-update">
           <i className="fas fa-clock" />
-          Last update: {repository.updated_at}
+          <span style={{fontWeight: '500'}}>Last update: </span>
+          <ReactTimeAgo date={new Date(repository.updated_at)} locale="en-US" />
         </div>
       </div>
       <div className="right-container">
