@@ -42,6 +42,10 @@
   top: 5vh !important;
 }
 
+.hidden {
+  display: none;
+}
+
 @media only screen and (max-width: 768px) {
   .search-page-header {
     padding-top: 28vh;
@@ -62,111 +66,6 @@
   }
 }
 
-.hidden {
-  display: none;
-}
-
-.user-card {
-  background-color: #ffffff;
-  display: flex;
-  color: #353535;
-  width: 50vw;
-  height: 0;
-  opacity: 0;
-  z-index: -1;
-  top: 28vh;
-  position: absolute;
-  justify-content: center;
-  padding-top: 80px;
-
-  box-shadow: 1px 4px 22px -7px rgba(0, 0, 0, 0.15);
-  border-radius: 10px;
-
-  transition: opacity 0.6s ease-in 0.4s;
-}
-
-.visible {
-  opacity: 1;
-  height: 60vh;
-  z-index: 0;
-}
-
-.user-avatar {
-  width: 140px;
-  height: 140px;
-  border-radius: 50%;
-  position: absolute;
-  top: -75px;
-  text-align: center;
-  box-shadow: 1px 4px 22px -7px rgba(0, 0, 0, 0.3);
-}
-
-.top-bar {
-  width: 100%;
-  height: 8px;
-  top: 0;
-  position: absolute;
-  background: radial-gradient(circle at 50%, #ffffff, #eeeeee, #cccccc);
-  border-radius: 10px 10px 0 0;
-}
-
-/* .top-bar::after {
-  content: "";
-  display: block;
-  width: 80%;
-  left: 10%;
-  height: 1px;
-  position: relative;
-  top: 100%;
-  background: radial-gradient(
-    ellipse at center,
-    #dee4ef 0,
-    hsla(0, 0%, 100%, 0) 80%
-  );
-} */
-
-.card-content {
-  width: 100%;
-  padding: 0 54px;
-  display: flex;
-  flex-direction: column;
-}
-
-.card-content .icon {
-  font-size: 1rem;
-  color: #bbbbbb;
-}
-
-.content-title {
-  border-bottom: 1px solid #eeeeee;
-  text-align: center;
-}
-
-.content-title > h2 {
-  margin: 0;
-}
-
-.content-title > p {
-  margin: 0 0 12px 0;
-}
-
-.content-containers {
-  display: flex;
-  padding-top: 24px;
-  justify-content: space-around;
-}
-
-.content-left-container > div,
-.content-right-container > div {
-  margin-bottom: 16px;
-}
-
-.content-links {
-  display: flex;
-  justify-content: space-around;
-  margin-top: 24px;
-}
-
 .modal-title {
   color: #222222;
 }
@@ -174,18 +73,4 @@
 .modal-title i {
   color: #1178da;
   padding-right: 4px;
-}
-
-@media only screen and (max-width: 600px) {
-  .user-card {
-    width: 90vw;
-  }
-
-  .content-containers {
-    flex-direction: column;
-  }
-
-  .card-content {
-    padding: 0 36px;
-  }
 }

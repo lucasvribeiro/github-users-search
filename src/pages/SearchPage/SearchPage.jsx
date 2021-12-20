@@ -1,22 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
+
+import Button from "../../components/Button/Button";
+import Modalr from "../../components/Modalr/Modalr";
+import Card from "../../components/Card/Card";
+import Repository from "../../components/Repository/Repository";
 import SearchBox from "../../components/SearchBox/SearchBox";
-import { Modal, Tag } from "antd";
 
 import github from "../../images/github.png";
 
 import "./SearchPage.css";
-import { useEffect } from "react/cjs/react.development";
-
-import Button from "../../components/Button/Button";
-import Modalr from "../../components/Modalr/Modalr";
-import Repository from "../../components/Repository/Repository";
 
 const SearchPage = () => {
   const [loading, setLoading] = useState(false);
   const [searchValue, setSearchValue] = useState();
 
-  const [user, setUser] = useState();
+  const [user, setUser] = useState(null);
   const [repos, setRepos] = useState();
   const [starred, setStarred] = useState();
 
@@ -114,64 +113,20 @@ const SearchPage = () => {
           onInputChange={searchChanged}
         />
 
-        <div className={user ? "user-card visible" : "user-card"}>
-          <div className="top-bar"></div>
-          <img src={user?.avatar_url} alt="Avatar" className="user-avatar" />
-
-          <div className="card-content">
-            <div className="content-title">
-              <h2>{user?.name}</h2>
-              <p>@{user?.login}</p>
-            </div>
-
-            <div className="content-containers">
-              <div className="content-left-container">
-                <div>
-                  <span className="icon">
-                    <i className="fas fa-users"></i>
-                  </span>
-                  &nbsp;&nbsp;<b>{user?.followers}</b> Followers ·{" "}
-                  <b> {user?.following}</b> Following
-                </div>
-
-                <div>
-                  <span className="icon">
-                    <i className="fas fa-building"></i>
-                  </span>
-                  &nbsp;&nbsp; {user?.company || "not included"}
-                </div>
-              </div>
-
-              <div className="content-right-container">
-                <div>
-                  <span className="icon">
-                    <i className="fas fa-map-marker-alt"></i>
-                  </span>
-                  &nbsp;&nbsp; {user?.location || "not included"}
-                </div>
-
-                <div>
-                  <span className="icon">
-                    <i className="fas fa-globe"></i>
-                  </span>
-                  &nbsp;&nbsp; {user?.blog || "not included"}
-                </div>
-              </div>
-            </div>
-
-            <div className="content-links">
-              <Button onClick={() => changeModalState("repos")}>
-                <i className="fas fa-book" />
-                &nbsp;&nbsp;Repositories
-              </Button>
-
-              <Button onClick={() => changeModalState("starred")}>
-                <i className="fas fa-star" />
-                &nbsp;&nbsp;Starred
-              </Button>
-            </div>
-          </div>
-        </div>
+        <Card
+          user={user}
+          visible={user && true}
+          buttons={[
+            <Button key="btn-01" onClick={() => changeModalState("repos")}>
+              <i className="fas fa-book" />
+              &nbsp;&nbsp;Repositories
+            </Button>,
+            <Button key="btn-02" onClick={() => changeModalState("starred")}>
+              <i className="fas fa-star" />
+              &nbsp;&nbsp;Starred
+            </Button>,
+          ]}
+        />
       </div>
 
       <Modalr

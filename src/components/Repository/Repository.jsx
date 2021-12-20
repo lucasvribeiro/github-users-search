@@ -120,9 +120,4 @@ Repository.propTypes = {
   repository: PropTypes.object.isRequired,
 };
 
-Repository.defaultProps = {
-  visible: false,
-  closable: true,
-};
-
 export default Repository;
