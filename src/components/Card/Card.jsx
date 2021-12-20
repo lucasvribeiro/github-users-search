@@ -39,13 +39,14 @@ const StyledCard = styled.div`
   .card-title {
     border-bottom: 1px solid #eeeeee;
     text-align: center;
+    padding-bottom: 12px;
 
     > h2 {
       margin: 0;
     }
 
     > p {
-      margin: 0 0 12px 0;
+      margin: 0;
     }
   }
 
@@ -167,6 +168,7 @@ const Card = ({
   buttons,
   showButtons,
   showBackLink,
+  showGoProfilePageLink,
 }) => {
   return (
     <StyledCard visible={visible} style={style}>
@@ -180,11 +182,14 @@ const Card = ({
 
       <div className="card-content">
         <div className="card-title">
-          <Link to={`/user/${user?.login}`}>
-            <h2>{user?.name}</h2>
-          </Link>
-
+          <h2>{user?.name}</h2>
           <p>@{user?.login}</p>
+
+          {showGoProfilePageLink && (
+            <Link className="profile-page-link" to={`/user/${user?.login}`}>
+              Go to Profile Page &nbsp; <i className="fas fa-arrow-right" />
+            </Link>
+          )}
         </div>
 
         <div className="card-containers">
@@ -277,6 +282,7 @@ Card.propTypes = {
   buttons: PropTypes.arrayOf(Button),
   showButtons: PropTypes.bool,
   showBackLink: PropTypes.bool,
+  showGoProfilePageLink: PropTypes.bool,
 };
 
 Card.defaultProps = {
@@ -284,6 +290,7 @@ Card.defaultProps = {
   visible: false,
   showButtons: true,
   showBackLink: false,
+  showGoProfilePageLink: false,
 };
 
 export default Card;

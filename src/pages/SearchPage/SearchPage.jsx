@@ -120,6 +120,7 @@ const SearchPage = () => {
         <Card
           user={user}
           visible={user && true}
+          showGoProfilePageLink={true}
           buttons={[
             <Button
               icon="book"

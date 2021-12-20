@@ -1,3 +1,4 @@
+import { Spin } from "antd";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -51,29 +52,31 @@ const UserPage = () => {
           setLoading(false);
         });
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
   useEffect(() => {
     if (username) getUser();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [username]);
 
   return (
-    <div className="user-page">
-      {user && organizations && (
-        <Card
-          type="full"
-          key={user.id}
-          user={user}
-          organizations={organizations}
-          visible={true}
-          showButtons={false}
-          showBackLink={true}
-          style={{ top: "15vh" }}
-        />
-      )}
-    </div>
+    <Spin spinning={loading}>
+      <div className="user-page">
+        {user && organizations && (
+          <Card
+            type="full"
+            key={user.id}
+            user={user}
+            organizations={organizations}
+            visible={true}
+            showButtons={false}
+            showBackLink={true}
+            style={{ top: "15vh" }}
+          />
+        )}
+      </div>
+    </Spin>
   );
 };
 
