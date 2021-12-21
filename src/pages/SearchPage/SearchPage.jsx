@@ -130,6 +130,7 @@ const SearchPage = () => {
               icon="book"
               key="btn-01"
               type="primary"
+              color="#222222"
               loading={loadingRepos}
               disabled={loadingRepos}
               onClick={getRepos}
@@ -140,6 +141,7 @@ const SearchPage = () => {
               icon="star"
               key="btn-02"
               type="primary"
+              color="#222222"
               loading={loadingStarred}
               disabled={loadingStarred}
               onClick={getStarred}

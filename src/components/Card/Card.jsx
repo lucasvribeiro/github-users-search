@@ -26,13 +26,15 @@ const StyledCard = styled.div`
 
   .back-link {
     position: absolute;
+    color: #222222;
     top: -6%;
     left: 2%;
   }
 
   .profile-page-link {
     position: absolute;
-    top: -6%;
+    color: #222222;
+    top: -7%;
     right: 2%;
   }
 
