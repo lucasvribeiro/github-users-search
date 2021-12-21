@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { message } from "antd";
 
 import Button from "../../components/Button/Button";
 import Modalr from "../../components/Modalr/Modalr";
@@ -36,6 +37,7 @@ const SearchPage = () => {
         },
       })
       .then((res) => {
+        console.log(res.data);
         setUser(res.data);
         setLoading(false);
 
@@ -43,7 +45,9 @@ const SearchPage = () => {
         setStarred(null);
       })
       .catch((err) => {
-        console.log(err.response);
+        if (err.response.status === 404) {
+          message.error("404: Usuário não encontrado.");
+        }
         setLoading(false);
       });
   };

@@ -77,6 +77,8 @@ const StyledTag = styled(Tag)`
 `;
 
 const Repository = ({ key, repository }) => {
+  console.log(repository);
+
   return (
     <StyledRepository key={key}>
       <div className="left-container">
@@ -109,7 +111,7 @@ const Repository = ({ key, repository }) => {
         </StyledTag>
         <StyledTag color="blue" className="colored-tag">
           <i className="fas fa-code-branch" />
-          {repository.watchers_count}
+          {repository.forks_count}
         </StyledTag>
       </div>
     </StyledRepository>
