@@ -16,4 +16,10 @@ A web application to find users profiles from GitHub.
 3. `npm i` or `npm install`
 4. `npm start`
 
+### ✅ Future Tasks:
+- Loader Component;
+- Empty Component;
+- Feature to Search Repositories (by name)
+- Feature to Change Repositories List Order (last update, name, etc)
+
 ### 🙅‍♂️ Created by [Lucas Vinicius Ribeiro](https://github.com/lucasvribeiro).
