@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import PropTypes, { object } from "prop-types";
 import { Tooltip } from "antd";
 import { Link } from "react-router-dom";
@@ -9,10 +9,8 @@ const StyledCard = styled.div`
   background-color: #ffffff;
   display: flex;
   color: #353535;
-  width: fit-content;
-  position: absolute;
+  position: relative;
   justify-content: center;
-  padding: 80px 0 60px 0;
 
   box-shadow: 1px 4px 22px -7px rgba(0, 0, 0, 0.15);
   border-radius: 10px;
@@ -22,7 +20,11 @@ const StyledCard = styled.div`
   opacity: ${(props) => (props.visible ? 1 : 0)};
   height: ${(props) => (props.visible ? "fit-content" : 0)};
   z-index: ${(props) => (props.visible ? 0 : -1)};
-  top: ${(props) => (props.top || props.visible ? "24vh" : "-5vh")};
+  top: ${(props) => (props.top || props.visible ? "24vh" : "-10vh")};
+
+  padding: ${(props) =>
+    props.cardStyle === "side" ? "80px 0 40px 0" : "80px 0 60px 0"};
+  width: ${(props) => (props.cardStyle === "side" ? "380px" : "fit-content")};
 
   .back-link {
     position: absolute;
@@ -40,10 +42,12 @@ const StyledCard = styled.div`
 
   .card-content {
     width: 100%;
-    padding: 0 54px;
     display: flex;
     flex-direction: column;
     font-size: 1rem;
+
+    font-size: ${(props) => (props.cardStyle === "side" ? "0.9rem" : "1rem")};
+    padding: ${(props) => (props.cardStyle === "side" ? "0 24px" : "0 54px")};
   }
 
   .card-title {
@@ -65,6 +69,9 @@ const StyledCard = styled.div`
     display: flex;
     padding-top: 24px;
     justify-content: space-between;
+
+    flex-direction: ${(props) =>
+      props.cardStyle === "side" ? "column" : "row"};
   }
 
   .card-extra-content {
@@ -129,19 +136,20 @@ const StyledCard = styled.div`
   }
 
   @media only screen and (max-width: 768px) {
+    width: ${(props) => props.cardStyle === "side" && "90vw"} !important;
+
     .card-containers {
       flex-direction: column;
     }
   }
-`;
 
-const TopBar = styled.div`
-  width: 100%;
-  height: 8px;
-  top: 0;
-  position: absolute;
-  background: radial-gradient(circle at 50%, #ffffff, #eeeeee, #cccccc);
-  border-radius: 10px 10px 0 0;
+  ${(props) =>
+    props.cardStyle === "side" &&
+    css`
+      @media only screen and (max-width: 1024px) {
+        width: 300px;
+      }
+    `}
 `;
 
 const Avatar = styled.img`
@@ -164,9 +172,10 @@ const Card = ({
   showButtons,
   showBackLink,
   showGoProfilePageLink,
+  cardStyle,
 }) => {
   return (
-    <StyledCard visible={visible} style={style}>
+    <StyledCard visible={visible} style={style} cardStyle={cardStyle}>
       {showBackLink && (
         <Link to="/" className="back-link">
           <i className="fas fa-arrow-left" /> &nbsp;Go Back
@@ -180,7 +189,6 @@ const Card = ({
         </Link>
       )}
 
-      <TopBar />
       <Avatar src={user?.avatar_url} alt="Avatar" />
 
       <div className="card-content">
@@ -274,6 +282,7 @@ Card.propTypes = {
   type: PropTypes.string,
   user: PropTypes.object,
   style: PropTypes.object,
+  cardStyle: PropTypes.string,
   organizations: PropTypes.arrayOf(object),
   visible: PropTypes.bool,
   buttons: PropTypes.arrayOf(Button),

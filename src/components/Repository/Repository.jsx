@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import PropTypes from "prop-types";
 import ReactTimeAgo from "react-time-ago";
 import { Tag } from "antd";
@@ -17,6 +17,8 @@ const StyledRepository = styled.div`
     display: flex;
     align-items: flex-start;
     padding-top: 20px;
+
+    justify-content: end;
   }
 
   .repo-name {
@@ -49,6 +51,8 @@ const StyledRepository = styled.div`
 
     .right-container {
       padding-top: 10px;
+      width: 100%;
+      justify-content: start;
     }
 
     .repo-name {
@@ -60,6 +64,33 @@ const StyledRepository = styled.div`
       font-size: 0.8rem;
     }
   }
+
+  ${(props) =>
+    props.type === "list" &&
+    css`
+      @media only screen and (max-width: 1024px) {
+        flex-direction: column;
+
+        .left-container {
+          width: 100%;
+        }
+
+        .right-container {
+          padding-top: 10px;
+          width: 100%;
+          justify-content: start;
+        }
+
+        .repo-name {
+          font-size: 1rem;
+        }
+
+        .repo-description,
+        .repo-last-update {
+          font-size: 0.8rem;
+        }
+      }
+    `}
 `;
 
 const StyledTag = styled(Tag)`
@@ -76,11 +107,9 @@ const StyledTag = styled(Tag)`
   }
 `;
 
-const Repository = ({ key, repository }) => {
-  console.log(repository);
-
+const Repository = ({ key, repository, type }) => {
   return (
-    <StyledRepository key={key}>
+    <StyledRepository key={key} type={type}>
       <div className="left-container">
         <div className="repo-name">
           {repository.full_name}
@@ -120,7 +149,12 @@ const Repository = ({ key, repository }) => {
 
 Repository.propTypes = {
   key: PropTypes.any,
+  type: PropTypes.string,
   repository: PropTypes.object.isRequired,
+};
+
+Repository.defaultProps = {
+  type: "modal",
 };
 
 export default Repository;
