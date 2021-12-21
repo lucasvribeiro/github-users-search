@@ -61,11 +61,14 @@ const SearchPage = () => {
     else {
       setLoadingRepos(true);
       axios
-        .get(`https://api.github.com/users/${user.login}/repos`, {
-          headers: {
-            Authorization: `${token}`,
-          },
-        })
+        .get(
+          `https://api.github.com/users/${user.login}/repos?sort=updated&per_page=100`,
+          {
+            headers: {
+              Authorization: `${token}`,
+            },
+          }
+        )
         .then((res) => {
           setRepos(res.data);
           setLoadingRepos(false);
@@ -83,12 +86,16 @@ const SearchPage = () => {
     else {
       setLoadingStarred(true);
       axios
-        .get(`https://api.github.com/users/${user.login}/starred`, {
-          headers: {
-            Authorization: `${token}`,
-          },
-        })
+        .get(
+          `https://api.github.com/users/${user.login}/starred?sort=updated&per_page=100`,
+          {
+            headers: {
+              Authorization: `${token}`,
+            },
+          }
+        )
         .then((res) => {
+          console.log(res.data);
           setStarred(res.data);
           setLoadingStarred(false);
           setModalState({ state: true, type: "starred" });

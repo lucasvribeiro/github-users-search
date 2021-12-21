@@ -43,11 +43,14 @@ const UserPage = () => {
 
   const getRepos = () => {
     axios
-      .get(`https://api.github.com/users/${username}/repos`, {
-        headers: {
-          Authorization: `${token}`,
-        },
-      })
+      .get(
+        `https://api.github.com/users/${username}/repos?sort=updated&per_page=100`,
+        {
+          headers: {
+            Authorization: `${token}`,
+          },
+        }
+      )
       .then((res) => {
         setRepos(res.data);
       })
@@ -59,11 +62,14 @@ const UserPage = () => {
 
   const getStarred = () => {
     axios
-      .get(`https://api.github.com/users/${username}/starred`, {
-        headers: {
-          Authorization: `${token}`,
-        },
-      })
+      .get(
+        `https://api.github.com/users/${username}/starred?sort=updated&per_page=100`,
+        {
+          headers: {
+            Authorization: `${token}`,
+          },
+        }
+      )
       .then((res) => {
         setStarred(res.data);
         setLoading(false);
