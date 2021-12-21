@@ -1,8 +1,9 @@
 import styled from "styled-components";
 import PropTypes, { object } from "prop-types";
-import Button from "../Button/Button";
 import { Tooltip } from "antd";
 import { Link } from "react-router-dom";
+
+import Button from "../Button/Button";
 
 const StyledCard = styled.div`
   background-color: #ffffff;
@@ -21,7 +22,7 @@ const StyledCard = styled.div`
   opacity: ${(props) => (props.visible ? 1 : 0)};
   height: ${(props) => (props.visible ? "fit-content" : 0)};
   z-index: ${(props) => (props.visible ? 0 : -1)};
-  top: ${(props) => (props.visible ? "28vh" : 0)};
+  top: ${(props) => (props.top || props.visible ? "24vh" : "-5vh")};
 
   .back-link {
     position: absolute;
@@ -29,11 +30,18 @@ const StyledCard = styled.div`
     left: 2%;
   }
 
+  .profile-page-link {
+    position: absolute;
+    top: -6%;
+    right: 2%;
+  }
+
   .card-content {
     width: 100%;
     padding: 0 54px;
     display: flex;
     flex-direction: column;
+    font-size: 1rem;
   }
 
   .card-title {
@@ -42,7 +50,8 @@ const StyledCard = styled.div`
     padding-bottom: 12px;
 
     > h2 {
-      margin: 0;
+      margin: 10px 0 0 0;
+      line-height: 1.5rem;
     }
 
     > p {
@@ -108,35 +117,19 @@ const StyledCard = styled.div`
       width: 100% !important;
     }
 
-    .card-links {
-      justify-content: space-between;
+    .card-content {
+      padding: 0 24px;
+    }
 
-      > button {
-        margin: 0;
-      }
+    .card-links > button {
+      margin: 0 8px;
     }
   }
 
   @media only screen and (max-width: 768px) {
-    width: 90vw !important;
-
     .card-containers {
       flex-direction: column;
-      align-items: center;
     }
-
-    .card-left-container,
-    .card-right-container {
-      width: 70%;
-    }
-
-    .card-content {
-      padding: 0 24px;
-    }
-  }
-
-  @media only screen and (max-width: 1200px) {
-    width: 70vw;
   }
 `;
 
@@ -150,11 +143,11 @@ const TopBar = styled.div`
 `;
 
 const Avatar = styled.img`
-  width: 140px;
-  height: 140px;
+  width: 128px;
+  height: 128px;
   border-radius: 50%;
   position: absolute;
-  top: -75px;
+  top: -55px;
   text-align: center;
   box-shadow: 1px 4px 22px -7px rgba(0, 0, 0, 0.3);
 `;
@@ -177,6 +170,14 @@ const Card = ({
           <i className="fas fa-arrow-left" /> &nbsp;Go Back
         </Link>
       )}
+
+      {showGoProfilePageLink && (
+        <Link className="profile-page-link" to={`/user/${user?.login}`}>
+          Profile Page &nbsp;
+          <i className="fas fa-arrow-right" />
+        </Link>
+      )}
+
       <TopBar />
       <Avatar src={user?.avatar_url} alt="Avatar" />
 
@@ -184,12 +185,6 @@ const Card = ({
         <div className="card-title">
           <h2>{user?.name}</h2>
           <p>@{user?.login}</p>
-
-          {showGoProfilePageLink && (
-            <Link className="profile-page-link" to={`/user/${user?.login}`}>
-              Go to Profile Page &nbsp; <i className="fas fa-arrow-right" />
-            </Link>
-          )}
         </div>
 
         <div className="card-containers">

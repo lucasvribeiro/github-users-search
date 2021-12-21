@@ -1,12 +1,12 @@
 .search-page {
   background: #ffffff;
-  height: 100vh;
-  min-height: fit-content;
+  height: fit-content;
+  min-height: 100vh;
   width: 100vw;
 }
 
 .search-page-header {
-  width: 100%;
+  width: 100vw;
   display: flex;
   justify-content: center;
   padding-top: 20vh;
@@ -47,6 +47,10 @@
 }
 
 @media only screen and (max-width: 768px) {
+  .expanded {
+    height: 110vh;
+  }
+
   .search-page-header {
     padding-top: 28vh;
   }

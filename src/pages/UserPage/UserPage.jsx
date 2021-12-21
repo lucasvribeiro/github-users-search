@@ -1,7 +1,8 @@
-import { Spin } from "antd";
-import axios from "axios";
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { useParams } from "react-router-dom";
+import { Spin } from "antd";
+
 import Card from "../../components/Card/Card";
 
 import "./UserPage.css";
@@ -62,7 +63,7 @@ const UserPage = () => {
 
   return (
     <Spin spinning={loading}>
-      <div className="user-page">
+      <div className={user ? "user-page expanded" : "user-page"}>
         {user && organizations && (
           <Card
             type="full"

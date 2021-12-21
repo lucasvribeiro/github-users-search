@@ -45,10 +45,10 @@ const SearchPage = () => {
         setStarred(null);
       })
       .catch((err) => {
+        setLoading(false);
         if (err.response.status === 404) {
           message.error("404: Usuário não encontrado.");
         }
-        setLoading(false);
       });
   };
 
@@ -101,7 +101,7 @@ const SearchPage = () => {
   };
 
   return (
-    <div className="search-page">
+    <div className={user ? "search-page expanded" : "search-page"}>
       <div className="search-page-header">
         <img src={github} alt="Github" className={user && "hidden"} />
         <h1 className={user ? "search-page-title hidden" : "search-page-title"}>
