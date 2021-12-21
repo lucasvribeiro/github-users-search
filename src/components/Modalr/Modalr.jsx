@@ -5,8 +5,9 @@ import { Modal } from "antd";
 const StyledModal = styled(Modal)`
   width: fit-content !important;
   top: 40px !important;
-  border-radius: 20px !important;
+  border-radius: 10px !important;
   max-width: 800px !important;
+  padding: 0 !important;
 
   .ant-modal-header {
     border-radius: 8px 8px 0 0 !important;
@@ -14,6 +15,8 @@ const StyledModal = styled(Modal)`
 
   .ant-modal-content {
     border-radius: 8px !important;
+    overflow-y: scroll !important;
+    height: calc(100vh - 40px - 40px) !important;
   }
 
   .ant-modal-body {
@@ -25,7 +28,12 @@ const StyledModal = styled(Modal)`
   }
 `;
 
-const Modalr = ({ children, title, visible, closable, onCancel }) => {
+const Modalr = ({ children, title, visible, closable, onCancel, id }) => {
+  // add id to ant-modal-content because of the InfinteScroll component
+  const antModalContent =
+    document.getElementsByClassName("ant-modal-content")[0];
+  if (antModalContent) antModalContent.id = id;
+
   return (
     <StyledModal
       title={title}
@@ -33,7 +41,6 @@ const Modalr = ({ children, title, visible, closable, onCancel }) => {
       closable={closable}
       onCancel={onCancel}
       footer={null}
-      bodyStyle={{overflowX: 'hidden'}}
     >
       {children}
     </StyledModal>
@@ -41,6 +48,7 @@ const Modalr = ({ children, title, visible, closable, onCancel }) => {
 };
 
 Modalr.propTypes = {
+  id: PropTypes.string,
   title: PropTypes.any,
   visible: PropTypes.bool,
   closable: PropTypes.bool,

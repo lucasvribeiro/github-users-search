@@ -14,6 +14,7 @@ export const fetchUser = async (username) => {
 };
 
 export const fetchRepos = async (username, page) => {
+  console.log("teste");
   return await axios.get(
     `${BASE_URL}/${username}/repos?sort=updated&page=${page}`,
     headers

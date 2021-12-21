@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { message } from "antd";
+import InfiniteScroll from "react-infinite-scroll-component";
+import { message, Spin } from "antd";
 
 import Button from "../../components/Button/Button";
 import Modalr from "../../components/Modalr/Modalr";
@@ -22,8 +22,14 @@ const SearchPage = () => {
   const [searchValue, setSearchValue] = useState();
 
   const [user, setUser] = useState(null);
-  const [repos, setRepos] = useState();
-  const [starred, setStarred] = useState();
+  const [repos, setRepos] = useState(null);
+  const [starred, setStarred] = useState(null);
+
+  const [hasMoreRepos, setHasMoreRepos] = useState(true);
+  const [hasMoreStarred, setHasMoreStarred] = useState(true);
+
+  const [reposPage, setReposPage] = useState(1);
+  const [starredPage, setStarredPage] = useState(1);
 
   const [modalState, setModalState] = useState({ state: false, type: "" });
 
@@ -31,8 +37,20 @@ const SearchPage = () => {
     setSearchValue(e.target.value);
   };
 
+  const resetStates = () => {
+    setRepos(null);
+    setStarred(null);
+
+    setReposPage(1);
+    setStarredPage(1);
+
+    setHasMoreRepos(true);
+    setHasMoreStarred(true);
+  };
+
   const goSearch = () => {
     setLoading(true);
+    resetStates();
 
     fetchUser(searchValue)
       .then((res) => {
@@ -52,40 +70,53 @@ const SearchPage = () => {
   };
 
   const getRepos = () => {
-    if (repos) setModalState({ state: true, type: "repos" });
-    else {
-      setLoadingRepos(true);
+    console.log("pegando a página:", reposPage);
+    setLoadingRepos(true);
 
-      fetchRepos(user.login, 1)
-        .then((res) => {
-          setRepos(res.data);
-          setLoadingRepos(false);
-          setModalState({ state: true, type: "repos" });
-        })
-        .catch((err) => {
-          console.log(err.response);
-          setLoadingRepos(false);
-        });
-    }
+    fetchRepos(user.login, reposPage)
+      .then((res) => {
+        console.log(res.data);
+        setModalState({ state: true, type: "repos" });
+        setReposPage(reposPage + 1);
+
+        if (reposPage === 1) setRepos(res.data);
+        else setRepos(repos.concat(res.data));
+
+        if (!res.data.length) {
+          setHasMoreRepos(false);
+        }
+
+        setLoadingRepos(false);
+      })
+      .catch((err) => {
+        console.log(err.response);
+        setLoadingRepos(false);
+      });
   };
 
   const getStarred = () => {
-    if (starred) setModalState({ state: true, type: "starred" });
-    else {
-      setLoadingStarred(true);
+    console.log("pegando a página:", starredPage);
+    setLoadingStarred(true);
 
-      fetchStarred(user.login, 1)
-        .then((res) => {
-          console.log(res.data);
-          setStarred(res.data);
-          setLoadingStarred(false);
-          setModalState({ state: true, type: "starred" });
-        })
-        .catch((err) => {
-          console.log(err.response);
-          setLoadingStarred(false);
-        });
-    }
+    fetchStarred(user.login, starredPage)
+      .then((res) => {
+        console.log(res.data);
+        setModalState({ state: true, type: "starred" });
+        setStarredPage(starredPage + 1);
+
+        if (starredPage === 1) setStarred(res.data);
+        else setStarred(starred.concat(res.data));
+
+        if (!res.data.length) {
+          setHasMoreStarred(false);
+        }
+
+        setLoadingStarred(false);
+      })
+      .catch((err) => {
+        console.log(err.response);
+        setLoadingStarred(false);
+      });
   };
 
   useEffect(() => {
@@ -145,6 +176,7 @@ const SearchPage = () => {
       </div>
 
       <Modalr
+        id="scrollableDiv"
         visible={modalState.state}
         closable={true}
         onCancel={() => setModalState({ ...modalState, state: false })}
@@ -160,15 +192,57 @@ const SearchPage = () => {
           )
         }
       >
-        <div className="modal-content">
-          {modalState.type === "repos"
-            ? repos?.map((repo) => (
-                <Repository repository={repo} key={repo.id} />
-              ))
-            : starred?.map((starred) => (
-                <Repository repository={starred} key={starred.id} />
-              ))}
-        </div>
+        {modalState.type === "repos"
+          ? repos && (
+              <InfiniteScroll
+                dataLength={repos.length}
+                next={getRepos}
+                hasMore={hasMoreRepos}
+                scrollableTarget="scrollableDiv"
+                loader={
+                  <div
+                    style={{
+                      width: "100%",
+                      height: "60px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <Spin size="middle" />
+                  </div>
+                }
+              >
+                {repos?.map((repo) => (
+                  <Repository repository={repo} key={repo.id} />
+                ))}
+              </InfiniteScroll>
+            )
+          : starred && (
+              <InfiniteScroll
+                dataLength={starred.length}
+                next={getStarred}
+                hasMore={hasMoreStarred}
+                scrollableTarget="scrollableDiv"
+                loader={
+                  <div
+                    style={{
+                      width: "100%",
+                      height: "60px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <Spin size="middle" />
+                  </div>
+                }
+              >
+                {starred.map((starred) => (
+                  <Repository repository={starred} key={starred.id} />
+                ))}
+              </InfiniteScroll>
+            )}
       </Modalr>
     </div>
   );

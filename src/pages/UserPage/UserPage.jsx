@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
+import InfiniteScroll from "react-infinite-scroll-component";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { Spin, Tabs } from "antd";
+
+import { fetchUser, fetchRepos, fetchStarred } from "../../services/fetchData";
 
 import Card from "../../components/Card/Card";
 
@@ -14,8 +17,14 @@ const UserPage = () => {
   const [loading, setLoading] = useState(false);
 
   const [user, setUser] = useState();
-  const [repos, setRepos] = useState();
-  const [starred, setStarred] = useState();
+  const [repos, setRepos] = useState(null);
+  const [starred, setStarred] = useState(null);
+
+  const [hasMoreRepos, setHasMoreRepos] = useState(true);
+  const [hasMoreStarred, setHasMoreStarred] = useState(true);
+
+  const [reposPage, setReposPage] = useState(1);
+  const [starredPage, setStarredPage] = useState(1);
 
   const [organizations, setOrganizations] = useState();
 
@@ -26,12 +35,7 @@ const UserPage = () => {
   const getUser = () => {
     setLoading(true);
 
-    axios
-      .get(`https://api.github.com/users/${username}`, {
-        headers: {
-          Authorization: `${token}`,
-        },
-      })
+    fetchUser(username)
       .then((res) => {
         setUser(res.data);
       })
@@ -42,41 +46,44 @@ const UserPage = () => {
   };
 
   const getRepos = () => {
-    axios
-      .get(
-        `https://api.github.com/users/${username}/repos?sort=updated&per_page=100`,
-        {
-          headers: {
-            Authorization: `${token}`,
-          },
-        }
-      )
+    console.log("pegando a página:", reposPage);
+
+    fetchRepos(username, reposPage)
       .then((res) => {
-        setRepos(res.data);
+        console.log(res.data);
+        setReposPage(reposPage + 1);
+        setLoading(false);
+
+        if (reposPage === 1) setRepos(res.data);
+        else setRepos(repos.concat(res.data));
+
+        if (!res.data.length) {
+          setHasMoreRepos(false);
+        }
       })
       .catch((err) => {
-        console.log(err.response);
         setLoading(false);
+        console.log(err.response);
       });
   };
 
   const getStarred = () => {
-    axios
-      .get(
-        `https://api.github.com/users/${username}/starred?sort=updated&per_page=100`,
-        {
-          headers: {
-            Authorization: `${token}`,
-          },
-        }
-      )
+    console.log("pegando a página:", starredPage);
+
+    fetchStarred(username, starredPage)
       .then((res) => {
-        setStarred(res.data);
-        setLoading(false);
+        console.log(res.data);
+        setStarredPage(starredPage + 1);
+
+        if (starredPage === 1) setStarred(res.data);
+        else setStarred(starred.concat(res.data));
+
+        if (!res.data.length) {
+          setHasMoreStarred(false);
+        }
       })
       .catch((err) => {
         console.log(err.response);
-        setLoading(false);
       });
   };
 
@@ -130,30 +137,76 @@ const UserPage = () => {
         <div className="user-page-right-container">
           <Tabs defaultActiveKey="repos">
             <TabPane
+              key="repos"
+              id="repos"
               tab={
                 <>
                   <i className="fas fa-book" />
                   &nbsp; Repositories
                 </>
               }
-              key="repos"
             >
-              {repos?.map((repos) => (
-                <Repository repository={repos} key={repos.id} type="list" />
-              ))}
+              {repos && (
+                <InfiniteScroll
+                  dataLength={repos.length}
+                  next={getRepos}
+                  hasMore={hasMoreRepos}
+                  scrollableTarget="repos"
+                  loader={
+                    <div
+                      style={{
+                        width: "100%",
+                        height: "60px",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <Spin size="middle" />
+                    </div>
+                  }
+                >
+                  {repos?.map((repo) => (
+                    <Repository repository={repo} key={repo.id} />
+                  ))}
+                </InfiniteScroll>
+              )}
             </TabPane>
             <TabPane
+              key="starred"
+              id="starred"
               tab={
                 <>
                   <i className="fas fa-star" />
                   &nbsp; Starred
                 </>
               }
-              key="starred"
             >
-              {starred?.map((starred) => (
-                <Repository repository={starred} key={starred.id} type="list" />
-              ))}
+              {starred && (
+                <InfiniteScroll
+                  dataLength={starred.length}
+                  next={getStarred}
+                  hasMore={hasMoreStarred}
+                  scrollableTarget="starred"
+                  loader={
+                    <div
+                      style={{
+                        width: "100%",
+                        height: "60px",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <Spin size="middle" />
+                    </div>
+                  }
+                >
+                  {starred.map((starred) => (
+                    <Repository repository={starred} key={starred.id} />
+                  ))}
+                </InfiniteScroll>
+              )}
             </TabPane>
           </Tabs>
         </div>
