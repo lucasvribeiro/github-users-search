@@ -31,6 +31,14 @@ const StyledRepository = styled.div`
       padding: 0 6px !important;
       font-weight: normal !important;
     }
+
+    > a {
+      color: #222222;
+
+      &:hover {
+        color: #1179da !important;
+      }
+    }
   }
 
   .repo-last-update,
@@ -113,7 +121,10 @@ const Repository = ({ key, repository, type }) => {
     <StyledRepository key={key} type={type}>
       <div className="left-container">
         <div className="repo-name">
-          {repository.full_name}
+          <a href={repository.html_url} target="_blank" rel="noreferrer">
+            {repository.full_name}
+          </a>
+
           {!repository.isPrivate && (
             <StyledTag color="geekblue" className="public-tag">
               Public
