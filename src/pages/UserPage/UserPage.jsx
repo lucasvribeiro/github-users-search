@@ -38,6 +38,7 @@ const UserPage = () => {
     fetchUser(username)
       .then((res) => {
         setUser(res.data);
+        setLoading(false);
       })
       .catch((err) => {
         console.log(err.response);
@@ -52,7 +53,6 @@ const UserPage = () => {
       .then((res) => {
         console.log(res.data);
         setReposPage(reposPage + 1);
-        setLoading(false);
 
         if (reposPage === 1) setRepos(res.data);
         else setRepos(repos.concat(res.data));
@@ -62,7 +62,6 @@ const UserPage = () => {
         }
       })
       .catch((err) => {
-        setLoading(false);
         console.log(err.response);
       });
   };
@@ -100,7 +99,6 @@ const UserPage = () => {
         })
         .catch((err) => {
           console.log(err.response);
-          setLoading(false);
         });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -167,7 +165,7 @@ const UserPage = () => {
                   }
                 >
                   {repos?.map((repo) => (
-                    <Repository repository={repo} key={repo.id} />
+                    <Repository type="list" repository={repo} key={repo.id} />
                   ))}
                 </InfiniteScroll>
               )}
@@ -203,7 +201,11 @@ const UserPage = () => {
                   }
                 >
                   {starred.map((starred) => (
-                    <Repository repository={starred} key={starred.id} />
+                    <Repository
+                      type="list"
+                      repository={starred}
+                      key={starred.id}
+                    />
                   ))}
                 </InfiniteScroll>
               )}
