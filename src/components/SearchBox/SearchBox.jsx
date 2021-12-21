@@ -95,6 +95,7 @@ const SearchBox = ({ loading, onInputChange, onButtonClick }) => {
       />
 
       <img src={lens} alt="Search Icon" className="lens" />
+
       <button type="submit" onClick={onButtonClick}>
         {loading ? (
           <img src={loadingGif} alt="Loading" style={{ width: "24px" }} />

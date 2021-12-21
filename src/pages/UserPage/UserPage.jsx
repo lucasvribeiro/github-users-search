@@ -7,9 +7,9 @@ import { Spin, Tabs } from "antd";
 import { fetchUser, fetchRepos, fetchStarred } from "../../services/fetchData";
 
 import Card from "../../components/Card/Card";
+import Repository from "../../components/Repository/Repository";
 
 import "./UserPage.css";
-import Repository from "../../components/Repository/Repository";
 
 const { TabPane } = Tabs;
 
@@ -46,11 +46,8 @@ const UserPage = () => {
   };
 
   const getRepos = () => {
-    console.log("pegando a página:", reposPage);
-
     fetchRepos(username, reposPage)
       .then((res) => {
-        console.log(res.data);
         setReposPage(reposPage + 1);
 
         if (reposPage === 1) setRepos(res.data);
@@ -67,11 +64,8 @@ const UserPage = () => {
   };
 
   const getStarred = () => {
-    console.log("pegando a página:", starredPage);
-
     fetchStarred(username, starredPage)
       .then((res) => {
-        console.log(res.data);
         setStarredPage(starredPage + 1);
 
         if (starredPage === 1) setStarred(res.data);

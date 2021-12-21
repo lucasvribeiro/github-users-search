@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { message, Spin } from "antd";
 
@@ -54,7 +54,6 @@ const SearchPage = () => {
 
     fetchUser(searchValue)
       .then((res) => {
-        console.log(res.data);
         setUser(res.data);
         setLoading(false);
 
@@ -70,12 +69,10 @@ const SearchPage = () => {
   };
 
   const getRepos = () => {
-    console.log("pegando a página:", reposPage);
     setLoadingRepos(true);
 
     fetchRepos(user.login, reposPage)
       .then((res) => {
-        console.log(res.data);
         setModalState({ state: true, type: "repos" });
         setReposPage(reposPage + 1);
 
@@ -95,12 +92,10 @@ const SearchPage = () => {
   };
 
   const getStarred = () => {
-    console.log("pegando a página:", starredPage);
     setLoadingStarred(true);
 
     fetchStarred(user.login, starredPage)
       .then((res) => {
-        console.log(res.data);
         setModalState({ state: true, type: "starred" });
         setStarredPage(starredPage + 1);
 
@@ -119,14 +114,11 @@ const SearchPage = () => {
       });
   };
 
-  useEffect(() => {
-    console.log(fetchRepos().then((res) => console.log(res.data)));
-  }, []);
-
   return (
     <div className={user ? "search-page expanded" : "search-page"}>
       <div className="search-page-header">
         <img src={github} alt="Github" className={user && "hidden"} />
+
         <h1 className={user ? "search-page-title hidden" : "search-page-title"}>
           Find Users <br />
           from <span style={{ fontWeight: "500" }}>GitHub</span>.
@@ -153,7 +145,7 @@ const SearchPage = () => {
               icon="book"
               key="btn-01"
               type="primary"
-              color="#222222"
+              color="#111111"
               loading={loadingRepos}
               disabled={loadingRepos}
               onClick={getRepos}
@@ -164,7 +156,7 @@ const SearchPage = () => {
               icon="star"
               key="btn-02"
               type="primary"
-              color="#222222"
+              color="#111111"
               loading={loadingStarred}
               disabled={loadingStarred}
               onClick={getStarred}

@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 import PropTypes, { object } from "prop-types";
-import { Tooltip } from "antd";
 import { Link } from "react-router-dom";
+import { Tooltip } from "antd";
 
 import Button from "../Button/Button";
 

@@ -120,25 +120,30 @@ const Repository = ({ key, repository, type }) => {
             </StyledTag>
           )}
         </div>
+
         <div className="repo-description">
           <i className="fas fa-align-left" />
           {repository.description?.substring(0, 40) || "no description"}...
         </div>
+
         <div className="repo-last-update">
           <i className="fas fa-clock" />
           <span style={{ fontWeight: "500" }}>Last update: </span>
           <ReactTimeAgo date={new Date(repository.updated_at)} locale="en-US" />
         </div>
       </div>
+
       <div className="right-container">
         <StyledTag color="gold" className="colored-tag">
           <i className="fas fa-star" />
           {repository.stargazers_count}
         </StyledTag>
+
         <StyledTag color="green" className="colored-tag">
           <i className="fas fa-eye" />
           {repository.watchers_count}
         </StyledTag>
+
         <StyledTag color="blue" className="colored-tag">
           <i className="fas fa-code-branch" />
           {repository.forks_count}
