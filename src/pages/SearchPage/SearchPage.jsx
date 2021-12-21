@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { message } from "antd";
 
@@ -7,6 +7,8 @@ import Modalr from "../../components/Modalr/Modalr";
 import Card from "../../components/Card/Card";
 import Repository from "../../components/Repository/Repository";
 import SearchBox from "../../components/SearchBox/SearchBox";
+
+import { fetchUser, fetchRepos, fetchStarred } from "../../services/fetchData";
 
 import github from "../../images/github.png";
 
@@ -25,17 +27,14 @@ const SearchPage = () => {
 
   const [modalState, setModalState] = useState({ state: false, type: "" });
 
-  const token = process.env.REACT_APP_GITHUB_TOKEN;
+  const searchChanged = (e) => {
+    setSearchValue(e.target.value);
+  };
 
   const goSearch = () => {
     setLoading(true);
 
-    axios
-      .get(`https://api.github.com/users/${searchValue}`, {
-        headers: {
-          Authorization: `${token}`,
-        },
-      })
+    fetchUser(searchValue)
       .then((res) => {
         console.log(res.data);
         setUser(res.data);
@@ -52,23 +51,12 @@ const SearchPage = () => {
       });
   };
 
-  const searchChanged = (e) => {
-    setSearchValue(e.target.value);
-  };
-
   const getRepos = () => {
     if (repos) setModalState({ state: true, type: "repos" });
     else {
       setLoadingRepos(true);
-      axios
-        .get(
-          `https://api.github.com/users/${user.login}/repos?sort=updated&per_page=100`,
-          {
-            headers: {
-              Authorization: `${token}`,
-            },
-          }
-        )
+
+      fetchRepos(user.login, 1)
         .then((res) => {
           setRepos(res.data);
           setLoadingRepos(false);
@@ -85,15 +73,8 @@ const SearchPage = () => {
     if (starred) setModalState({ state: true, type: "starred" });
     else {
       setLoadingStarred(true);
-      axios
-        .get(
-          `https://api.github.com/users/${user.login}/starred?sort=updated&per_page=100`,
-          {
-            headers: {
-              Authorization: `${token}`,
-            },
-          }
-        )
+
+      fetchStarred(user.login, 1)
         .then((res) => {
           console.log(res.data);
           setStarred(res.data);
@@ -106,6 +87,10 @@ const SearchPage = () => {
         });
     }
   };
+
+  useEffect(() => {
+    console.log(fetchRepos().then((res) => console.log(res.data)));
+  }, []);
 
   return (
     <div className={user ? "search-page expanded" : "search-page"}>
