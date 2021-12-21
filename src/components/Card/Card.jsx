@@ -12,6 +12,8 @@ const StyledCard = styled.div`
   position: relative;
   justify-content: center;
 
+  border: 1px solid #eeeeee;
+
   box-shadow: 1px 4px 22px -7px rgba(0, 0, 0, 0.15);
   border-radius: 10px;
 
@@ -160,6 +162,8 @@ const Avatar = styled.img`
   top: -55px;
   text-align: center;
   box-shadow: 1px 4px 22px -7px rgba(0, 0, 0, 0.3);
+
+  border: 4px solid #eeeeee;
 `;
 
 const Card = ({

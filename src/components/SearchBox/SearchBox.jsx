@@ -11,6 +11,8 @@ const SearchStyled = styled.div`
   --width: 90vw;
   --height: 64px;
 
+  border: 1px solid #eeeeee;
+
   background: var(--background);
   width: var(---width);
   height: var(--height);

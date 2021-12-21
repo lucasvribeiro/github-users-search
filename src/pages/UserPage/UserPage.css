@@ -16,10 +16,23 @@
 
   padding: 10px 20px;
   border-radius: 10px;
+  border: 1px solid #eeeeee;
   width: calc(100vw - 380px - 80px - 60px);
   height: fit-content;
 
   box-shadow: 1px 4px 22px -7px rgba(0, 0, 0, 0.15);
+}
+
+.ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+  color: #222222 !important;
+}
+
+.ant-tabs-tab {
+  color: #888888 !important;
+}
+
+.ant-tabs-ink-bar {
+  background: #222222 !important;
 }
 
 @media only screen and (max-width: 768px) {
