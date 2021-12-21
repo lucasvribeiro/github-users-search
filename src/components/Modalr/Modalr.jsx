@@ -16,6 +16,7 @@ const StyledModal = styled(Modal)`
   .ant-modal-content {
     border-radius: 8px !important;
     overflow-y: scroll !important;
+    overflow-x: hidden !important;
     height: calc(100vh - 40px - 40px) !important;
   }
 

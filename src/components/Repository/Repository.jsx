@@ -24,6 +24,7 @@ const StyledRepository = styled.div`
   .repo-name {
     font-size: 1.2rem;
     font-weight: 500;
+    word-wrap: break-word;
 
     > .public-tag {
       margin-left: 10px;

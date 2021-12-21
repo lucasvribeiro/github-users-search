@@ -38,7 +38,6 @@ const UserPage = () => {
     fetchUser(username)
       .then((res) => {
         setUser(res.data);
-        setLoading(false);
       })
       .catch((err) => {
         console.log(err.response);
@@ -63,6 +62,7 @@ const UserPage = () => {
       })
       .catch((err) => {
         console.log(err.response);
+        setLoading(false);
       });
   };
 
@@ -80,9 +80,12 @@ const UserPage = () => {
         if (!res.data.length) {
           setHasMoreStarred(false);
         }
+
+        setLoading(false);
       })
       .catch((err) => {
         console.log(err.response);
+        setLoading(false);
       });
   };
 
@@ -115,7 +118,7 @@ const UserPage = () => {
 
   return (
     <Spin spinning={loading}>
-      <div className={user ? "user-page expanded" : "user-page"}>
+      <div className="user-page">
         <div className="user-page-left-container">
           {user && organizations && (
             <Card
